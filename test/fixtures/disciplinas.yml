@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nome: MyString
+  vagas: 1
+  ep: false
+  ce: false
+  unidade: 
+
+two:
+  nome: MyString
+  vagas: 1
+  ep: false
+  ce: false
+  unidade: 

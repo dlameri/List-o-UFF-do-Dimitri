@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  matricula: 1
+  nome: MyString
+  situacao: MyString
+  curso: 
+
+two:
+  matricula: 1
+  nome: MyString
+  situacao: MyString
+  curso: 
