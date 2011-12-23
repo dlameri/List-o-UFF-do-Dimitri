@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ano: 1
+  atual: false
+  pronto: false
+
+two:
+  ano: 1
+  atual: false
+  pronto: false
