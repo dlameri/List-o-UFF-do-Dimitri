@@ -1,8 +1,9 @@
 <%= semantic_form_for [:admin, @curso] do |f| %>  
 	<%= f.inputs "Incluir Um-Por-Um" do %>
-  		<%= f.input :unidade %>
-    	<%= f.input :nome %>
-    	<%= f.input :vagas %>
+        <%= f.input :unidade %>
+        <%= f.input :ano %>
+        <%= f.input :nome %>
+        <%= f.input :vagas %>
     <% end %>
   	<%= f.buttons %>
 <% end %>
