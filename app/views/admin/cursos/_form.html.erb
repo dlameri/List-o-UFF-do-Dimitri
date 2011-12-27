@@ -10,7 +10,8 @@
 
 <%= semantic_form_for [:admin, @curso], :html => { :multipart => true }  do |f| %>  
 	<%= f.inputs "Incluir em massa" do %>
-  		<%= f.input :txtFile, :as => :file, :label => "Arquivo" %>    	
+        <%= f.input :ano %>
+  		<%= f.input :txtFile, :as => :file, :label => "Arquivo" %>
     <% end %>
   	<%= f.buttons %>
 <% end %>
