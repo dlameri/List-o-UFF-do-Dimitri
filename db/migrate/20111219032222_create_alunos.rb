@@ -5,6 +5,19 @@ class CreateAlunos < ActiveRecord::Migration
       t.string :nome
       t.string :situacao
       t.references :curso
+      t.float :media
+      t.float :c1
+      t.float :c1
+      t.float :red
+      t.float :lpllp
+      t.float :bio
+      t.float :fis
+      t.float :qui
+      t.float :mat
+      t.float :geo
+      t.float :his
+      t.float :filo
+      t.float :est	
 
       t.timestamps
     end

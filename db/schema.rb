@@ -51,6 +51,18 @@ ActiveRecord::Schema.define(:version => 20111223192123) do
     t.string   "nome"
     t.string   "situacao"
     t.integer  "curso_id"
+    t.float    "media"
+    t.float    "c1"
+    t.float    "red"
+    t.float    "lpllp"
+    t.float    "bio"
+    t.float    "fis"
+    t.float    "qui"
+    t.float    "mat"
+    t.float    "geo"
+    t.float    "his"
+    t.float    "filo"
+    t.float    "est"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ano_id"
@@ -78,25 +90,6 @@ ActiveRecord::Schema.define(:version => 20111223192123) do
 
   add_index "cursos", ["ano_id"], :name => "index_cursos_on_ano_id"
   add_index "cursos", ["unidade_id"], :name => "index_cursos_on_unidade_id"
-
-  create_table "disciplinas", :force => true do |t|
-    t.string   "nome"
-    t.integer  "prioridade"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "apelido"
-  end
-
-  create_table "nota", :force => true do |t|
-    t.integer  "aluno_id"
-    t.integer  "disciplina_id"
-    t.float    "pontuacao"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "nota", ["aluno_id"], :name => "index_nota_on_aluno_id"
-  add_index "nota", ["disciplina_id"], :name => "index_nota_on_disciplina_id"
 
   create_table "unidades", :force => true do |t|
     t.string   "nome"
