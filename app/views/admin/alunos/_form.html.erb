@@ -13,3 +13,9 @@
     <% end %>
   	<%= f.buttons %>
 <% end %>
+
+<%= semantic_form_for [:admin, @aluno], :html => { :multipart => true }  do |f| %>  
+	<%= f.inputs "Eliminar zeros" do %>
+    <% end %>
+  	<%= f.buttons %>
+<% end %>

@@ -3,7 +3,8 @@ Uff2012::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   
-  root :to => "home#index"
+  root :to => "cursos#index"
+  match "alunos/:id" => "alunos#show"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

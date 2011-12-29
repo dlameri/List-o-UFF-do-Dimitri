@@ -4,9 +4,11 @@ ActiveAdmin.register Aluno do
 	
 	controller do
 	    def create    		
-	    	@year = params[:aluno][:ano_id]
-	    	@fileParam1fase = params[:aluno][:txtFile1fase]
-	    	@fileParam2fase = params[:aluno][:txtFile2fase]
+            unless (params[:aluno].nil?)
+    	    	@year = params[:aluno][:ano_id]
+    	    	@fileParam1fase = params[:aluno][:txtFile1fase]
+	        	@fileParam2fase = params[:aluno][:txtFile2fase]
+            end
     		if ! @fileParam1fase.nil? then
       			if Aluno.process_file_primeira_fase(@fileParam1fase, @year)
 					flash[:notice] = "Arquivo incluido com sucesso !"
@@ -15,7 +17,7 @@ ActiveAdmin.register Aluno do
       				flash[:alert] = "Ocorreu um erro ao tentar incluir o arquivo"
       				redirect_to :action => :new
 				end
-			elsif ! @fileParam2fase.nil? then
+			elsif ! @fileParam2fase.nil? then                
 				if Aluno.process_file_segunda_fase(@fileParam2fase, @year)
 					flash[:notice] = "Arquivo incluido com sucesso !"
       				redirect_to :action => :index
@@ -23,6 +25,9 @@ ActiveAdmin.register Aluno do
       				flash[:alert] = "Ocorreu um erro ao tentar incluir o arquivo"
       				redirect_to :action => :new
 				end
+            else
+                Aluno.marca_como_reprovado()
+  				redirect_to :action => :index
     		end
   		end
   	end

@@ -1,7 +1,9 @@
 class Aluno < ActiveRecord::Base
   	belongs_to :curso
   	belongs_to :ano  	
-  
+    
+    default_scope  :order => [:media, :c1]
+    
 	def to_s
 		self.nome
 	end
@@ -44,7 +46,7 @@ class Aluno < ActiveRecord::Base
             if s =~ /(\s*([\d]{9})\s*([\d\.]+)\s*([\d\.]+)\s*([\d\.]+)\s*)/ then
                 3.times { |i|
                     line = s.strip
-                    if line =~ /(\s*([\d]{9})\s*([\d\.]+)\s*([\d\.]+)\s*([\d\.]+)\s*([\d]{1,2}[\.]{1}[\d]{1,2}\s+)?\s*)/ then
+                    if line =~ /(\s*([\d]{9})\s*([\d\.]+)\s*([\d\.]+)\s*([\d\.]+)\s*([\d]{1,2}[\.]{1}[\d]{1,2}\s*)?\s*)/ then
                         alunoAtual = Aluno.find_by_matricula($2.strip)
                         alunoAtual.red = $3.strip
                         alunoAtual.c1 = $4.strip
@@ -64,7 +66,9 @@ class Aluno < ActiveRecord::Base
             elsif s =~ /\s*[CURSO\:]{6}\s*([\d]{3})\s*.*/ then
                 cursoAtual = Curso.find_by_codigo($1.strip)
             end            
-  		}        
+  		}
+
+        self.marca_como_reprovado()
 	end
 	
 	def self.calculate_media(aluno) 
@@ -77,4 +81,16 @@ class Aluno < ActiveRecord::Base
 
         e1+e2
 	end
+
+    def self.marca_como_reprovado() 
+        Aluno.find_each do |aluno|
+            if (aluno.c1.nil? || aluno.c1 == 0.0 || aluno.red == 0.0 || aluno.c2 == 0.0 || (! aluno.exp.nil? && aluno.exp == 0.0))
+                aluno.situacao = "ELIMINADO"
+            else
+                aluno.situacao = "APROVADO"
+            end
+
+            aluno.save
+        end
+    end
 end

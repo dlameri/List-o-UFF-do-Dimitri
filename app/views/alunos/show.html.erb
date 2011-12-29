@@ -1,0 +1,31 @@
+<div id="wrapper">
+      <div id="header">
+        <h1 id="site_title">Ranking do Dimitri - Uff2012</h1>
+      </div>
+      <div id="title_bar">
+        <div id="titlebar_left">
+          <h2 id="page_title"><%=@curso.nome%></h2>
+        </div>        
+      </div>
+</div>
+
+<div id="active_admin_content" class="without_sidebar">
+    <div id="main_content_wrapper">
+        <div id="main_content">
+            
+            <table border="0" cellspacing="0" cellpadding="0" id="alunos" class="index_table">
+                <% @alunos.each_with_index do |aluno, index| %>
+                    <tr>                
+                        <td style="float: left; width: 270px;">
+                            <%= aluno.nome %>
+                        </td>
+                    </tr>
+                <% end %>             
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="footer">
+    <span>Todas as informações aqui contidas foram retiradas do site oficial - Conteúdo não oficial</span>
+</div>
