@@ -6,7 +6,7 @@ ActiveAdmin.register Aluno do
 	    def create    		
 	    	@year = params[:aluno][:ano_id]
 	    	@fileParam1fase = params[:aluno][:txtFile1fase]
-	    	@fileParam1fase = params[:aluno][:txtFile2fase]
+	    	@fileParam2fase = params[:aluno][:txtFile2fase]
     		if ! @fileParam1fase.nil? then
       			if Aluno.process_file_primeira_fase(@fileParam1fase, @year)
 					flash[:notice] = "Arquivo incluido com sucesso !"

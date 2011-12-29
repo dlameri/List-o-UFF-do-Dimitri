@@ -38,29 +38,43 @@ class Aluno < ActiveRecord::Base
 	end
 	
 	def self.process_file_segunda_fase(file, year)
-        ano = Ano.find_by_id(year)
-        Aluno.delete_all("ano_id = " + year)        
-        contador = 0
-        file.open.each_line{ |s|        	
-            s.strip!            
-            if ( s =~ /^\s*([\D]*)\s*([\d]{9})\s*[HABILITADO]{10}\s*[31\/]{0,3}\s*[\w\d]{0,3}\s*[\d]{0,2}\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*$/iu )            
-            	aluno = Aluno.find_by_matricula($1)
-            	aluno.red = $2
-            	aluno.c1 = $3
-            	aluno.c2 = $4
-            	#Pensar no caso de alunos com the
-            	
-            	self.calculate_media(aluno)                                            
-                
-                aluno.save
-                
-                contador += 1
-                print ">>>>>>>>>>>>>#{contador}<<<<<<<<<<<<<<<<<"
+        niteroi = Unidade.find_by_nome("Niteroi")
+        cursoAtual = nil
+        file.open.each_line{ |s|
+            if s =~ /(\s*([\d]{9})\s*([\d\.]+)\s*([\d\.]+)\s*([\d\.]+)\s*)/ then
+                3.times { |i|
+                    line = s.strip
+                    if line =~ /(\s*([\d]{9})\s*([\d\.]+)\s*([\d\.]+)\s*([\d\.]+)\s*([\d]{1,2}[\.]{1}[\d]{1,2}\s+)?\s*)/ then
+                        alunoAtual = Aluno.find_by_matricula($2.strip)
+                        alunoAtual.red = $3.strip
+                        alunoAtual.c1 = $4.strip
+                        alunoAtual.c2 = $5.strip
+                        unless $6.nil?
+                            alunoAtual.exp = $6.strip
+                        end
+                        alunoAtual.curso = cursoAtual
+                        
+                        alunoAtual.media = self.calculate_media(alunoAtual)                        
+
+                        alunoAtual.save
+
+                        s = s.gsub($1, "")                
+                    end            
+                }
+            elsif s =~ /\s*[CURSO\:]{6}\s*([\d]{3})\s*.*/ then
+                cursoAtual = Curso.find_by_codigo($1.strip)
             end            
-  		}
+  		}        
 	end
 	
 	def self.calculate_media(aluno) 
-		
+		e1 = (7 * (aluno.lpllp + aluno.bio + aluno.fis + aluno.qui + aluno.mat + aluno.geo + aluno.his + aluno.filo + aluno.est)) / 15
+        if aluno.exp.nil?
+            e2 = (13 * (aluno.red + aluno.c1 + aluno.c2)) / 6
+        else
+            e2 = ((13 * (aluno.red + aluno.exp))/ 6) + ((13 * (aluno.c1 + aluno.c2)) / 12)
+        end
+
+        e1+e2
 	end
 end

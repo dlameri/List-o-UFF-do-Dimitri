@@ -7,7 +7,6 @@ class CreateAlunos < ActiveRecord::Migration
       t.references :curso
       t.float :media
       t.float :c1
-      t.float :c1
       t.float :red
       t.float :lpllp
       t.float :bio
