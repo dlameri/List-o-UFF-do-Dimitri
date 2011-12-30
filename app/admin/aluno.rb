@@ -4,13 +4,12 @@ ActiveAdmin.register Aluno do
 	
 	controller do
 	    def create    		
-            unless (params[:aluno].nil?)
-    	    	@year = params[:aluno][:ano_id]
+            unless (params[:aluno].nil?)    	    	
     	    	@fileParam1fase = params[:aluno][:txtFile1fase]
 	        	@fileParam2fase = params[:aluno][:txtFile2fase]
             end
     		if ! @fileParam1fase.nil? then
-      			if Aluno.process_file_primeira_fase(@fileParam1fase, @year)
+      			if Aluno.process_file_primeira_fase(@fileParam1fase)
 					flash[:notice] = "Arquivo incluido com sucesso !"
       				redirect_to :action => :index
 				else
@@ -18,7 +17,7 @@ ActiveAdmin.register Aluno do
       				redirect_to :action => :new
 				end
 			elsif ! @fileParam2fase.nil? then                
-				if Aluno.process_file_segunda_fase(@fileParam2fase, @year)
+				if Aluno.process_file_segunda_fase(@fileParam2fase)
 					flash[:notice] = "Arquivo incluido com sucesso !"
       				redirect_to :action => :index
 				else

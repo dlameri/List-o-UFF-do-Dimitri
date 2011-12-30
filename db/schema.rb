@@ -65,21 +65,11 @@ ActiveRecord::Schema.define(:version => 20111229164538) do
     t.float    "est"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ano_id"
     t.float    "c2"
     t.float    "exp"
   end
 
-  add_index "alunos", ["ano_id"], :name => "index_alunos_on_ano_id"
   add_index "alunos", ["curso_id"], :name => "index_alunos_on_curso_id"
-
-  create_table "anos", :force => true do |t|
-    t.integer  "ano"
-    t.boolean  "atual"
-    t.boolean  "pronto"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "cursos", :force => true do |t|
     t.string   "nome"
@@ -87,11 +77,9 @@ ActiveRecord::Schema.define(:version => 20111229164538) do
     t.integer  "unidade_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ano_id"
     t.integer  "codigo"
   end
 
-  add_index "cursos", ["ano_id"], :name => "index_cursos_on_ano_id"
   add_index "cursos", ["unidade_id"], :name => "index_cursos_on_unidade_id"
 
   create_table "unidades", :force => true do |t|

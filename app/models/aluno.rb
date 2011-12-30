@@ -1,24 +1,21 @@
 class Aluno < ActiveRecord::Base
-  	belongs_to :curso
-  	belongs_to :ano  	
+  	belongs_to :curso  	
     
-    default_scope  :order => [:media, :c1]
+    default_scope  :order => ['media desc', 'exp desc','c1 desc', 'c2 desc', 'red desc', 'lpllp desc', 'bio desc', 'fis desc', 'qui desc', 'mat desc', 'geo desc', 'his desc', 'filo desc']
     
 	def to_s
 		self.nome
 	end
 
-    def self.process_file_primeira_fase(file, year)
-        ano = Ano.find_by_id(year)
-        Aluno.delete_all("ano_id = " + year)        
+    def self.process_file_primeira_fase(file)        
+        Aluno.delete_all
         contador = 0
         file.open.each_line{ |s|        	
             s.strip!            
             if ( s =~ /^\s*([\D]*)\s*([\d]{9})\s*[HABILITADO]{10}\s*[31\/]{0,3}\s*[\w\d]{0,3}\s*[\d]{0,2}\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*([\d]{1,2})\s*$/iu )            
                 aluno = Aluno.new do |a|
                     a.nome = $1
-                    a.matricula = $2    
-                    a.ano = ano
+                    a.matricula = $2                        
                     a.situacao = "APROVADO"
                     a.bio = $3
 	                a.fis = $4
@@ -34,14 +31,15 @@ class Aluno < ActiveRecord::Base
                 aluno.save
                 
                 contador += 1
-                print ">>>>>>>>>>>>>#{contador}<<<<<<<<<<<<<<<<<"
+                #puts "#{contador}"
             end            
   		}  		  		
 	end
 	
-	def self.process_file_segunda_fase(file, year)
+	def self.process_file_segunda_fase(file)
         niteroi = Unidade.find_by_nome("Niteroi")
         cursoAtual = nil
+        contador = 0
         file.open.each_line{ |s|
             if s =~ /(\s*([\d]{9})\s*([\d\.]+)\s*([\d\.]+)\s*([\d\.]+)\s*)/ then
                 3.times { |i|
@@ -60,7 +58,9 @@ class Aluno < ActiveRecord::Base
 
                         alunoAtual.save
 
-                        s = s.gsub($1, "")                
+                        s = s.gsub($1, "")
+                        contador += 1
+                        #puts "#{contador}"
                     end            
                 }
             elsif s =~ /\s*[CURSO\:]{6}\s*([\d]{3})\s*.*/ then
@@ -92,5 +92,7 @@ class Aluno < ActiveRecord::Base
 
             aluno.save
         end
+        
+        Aluno.delete_all("situacao = 'ELIMINADO'")
     end
 end

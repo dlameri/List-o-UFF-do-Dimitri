@@ -18,12 +18,12 @@
                 <table border="0" cellspacing="0" cellpadding="0" id="alunos" class="index_table">
                     <tr>
                     <% @cursos.each_with_index do |curso, index| %>
-                        <% if index % 5 == 0 %>
+                        <% if index % 4 == 0 %>
                             </tr><tr>
                         <% end %>             
                     
-                        <td style="float: left; width: 270px;">
-                            <a style="float: left; width: 270px;" href="/alunos/<%= curso.id %>" class="resource_id_link">
+                        <td style="float: left; width: 21%">
+                            <a href="/alunos/<%= curso.id %>" class="resource_id_link">
                                 <%= curso.nome %>
                             </a>
                         </td>

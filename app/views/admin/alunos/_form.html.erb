@@ -1,14 +1,12 @@
 <%= semantic_form_for [:admin, @aluno], :html => { :multipart => true }  do |f| %>  
-	<%= f.inputs "Incluir primeira fase" do %>
-        <%= f.input :ano %>
+	<%= f.inputs "Incluir primeira fase" do %>        
   		<%= f.input :txtFile1fase, :as => :file, :label => "Arquivo" %>    	
     <% end %>
   	<%= f.buttons %>
 <% end %>
 
 <%= semantic_form_for [:admin, @aluno], :html => { :multipart => true }  do |f| %>  
-	<%= f.inputs "Incluir segunda fase" do %>
-        <%= f.input :ano %>
+	<%= f.inputs "Incluir segunda fase" do %>        
   		<%= f.input :txtFile2fase, :as => :file, :label => "Arquivo" %>    	
     <% end %>
   	<%= f.buttons %>
